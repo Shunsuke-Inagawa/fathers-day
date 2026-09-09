@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>父の日カプセルメッセージ</title>
+<style>
+*{box-sizing:border-box}
+body{
+  font-family:-apple-system,'Hiragino Sans','Noto Sans JP',sans-serif;
+  background:linear-gradient(170deg,#2c3e50 0%,#3d5166 45%,#4a5f75 100%);
+  margin:0;padding:24px 16px 40px;color:#2d2d2d;min-height:100vh;
+}
+.card{
+  background:#fdfbf7;border-radius:16px;max-width:430px;margin:0 auto;
+  box-shadow:0 12px 40px rgba(0,0,0,.25);overflow:hidden;
+}
+.head{
+  background:linear-gradient(135deg,#8b6f47 0%,#a8834f 100%);
+  padding:30px 24px 26px;text-align:center;color:#fff;position:relative;
+}
+.head::after{
+  content:'';position:absolute;left:0;right:0;bottom:0;height:5px;
+  background:repeating-linear-gradient(90deg,#c9a227 0 14px,#8b6f47 14px 28px);
+}
+.tie{font-size:38px;line-height:1;margin-bottom:8px}
+h1{font-size:22px;margin:0 0 6px;letter-spacing:.04em;font-weight:700}
+.sub{font-size:13px;opacity:.9;letter-spacing:.03em}
+.body{padding:24px}
+.note{
+  background:#f5efe3;border-left:4px solid #c9a227;
+  padding:14px 16px;border-radius:8px;font-size:13px;line-height:1.75;
+  margin-bottom:22px;color:#5a4a35;
+}
+label{display:block;font-size:13px;font-weight:700;margin:18px 0 6px;color:#5a4a35;letter-spacing:.03em}
+input,textarea{
+  width:100%;padding:12px 13px;border:1.5px solid #e0d5c3;border-radius:9px;
+  font-size:15px;font-family:inherit;background:#fff;transition:border-color .2s;
+}
+input:focus,textarea:focus{outline:none;border-color:#c9a227}
+textarea{min-height:130px;resize:vertical;line-height:1.7}
+button{
+  width:100%;margin-top:24px;padding:15px;
+  background:linear-gradient(135deg,#8b6f47 0%,#a8834f 100%);
+  color:#fff;border:0;border-radius:9px;font-size:16px;font-weight:700;
+  letter-spacing:.06em;box-shadow:0 4px 14px rgba(139,111,71,.35);
+}
+button:active{transform:translateY(1px)}
+button:disabled{background:#c4bcb0;box-shadow:none}
+#status{margin-top:16px;padding:13px;border-radius:9px;font-size:14px;text-align:center;display:none;line-height:1.6}
+.ok{display:block!important;background:#eef4ea;color:#3d6b2e;border:1px solid #cfe0c4}
+.ng{display:block!important;background:#fbeceb;color:#a33a32;border:1px solid #f0cfcc}
+.foot{text-align:center;font-size:11px;color:#a09383;padding:0 24px 22px;letter-spacing:.03em}
+
+/* --- 配信プレビュー --- */
+#preview{display:none;max-width:430px;margin:26px auto 0}
+.pv-lead{
+  text-align:center;color:#e8e0d0;font-size:13px;letter-spacing:.06em;
+  margin-bottom:12px;line-height:1.8;
+}
+.pv-lead strong{display:block;font-size:15px;color:#f0d98a;font-weight:700;margin-bottom:3px}
+.phone{
+  background:#8fa8c8;border-radius:16px;overflow:hidden;
+  box-shadow:0 12px 40px rgba(0,0,0,.3);
+}
+.talk-bar{
+  background:#5b7ba3;color:#fff;padding:12px 16px;font-size:14px;
+  font-weight:600;display:flex;align-items:center;gap:8px;
+}
+.talk-bar .back{opacity:.85;font-size:16px}
+.talk{padding:16px 14px 22px;min-height:260px}
+.day{
+  text-align:center;margin-bottom:16px;
+}
+.day span{
+  background:rgba(0,0,0,.18);color:#fff;font-size:11px;
+  padding:4px 12px;border-radius:11px;letter-spacing:.04em;
+}
+.row{display:flex;gap:8px;margin-bottom:14px;align-items:flex-end}
+.icon{
+  width:38px;height:38px;border-radius:50%;flex-shrink:0;
+  background:#3d5f3d;color:#fff;font-size:9px;font-weight:700;
+  display:flex;align-items:center;justify-content:center;text-align:center;line-height:1.2;
+}
+.bubble{
+  background:#fff;border-radius:4px 16px 16px 16px;padding:13px 15px;
+  font-size:14px;line-height:1.75;max-width:270px;box-shadow:0 1px 3px rgba(0,0,0,.08);
+}
+.time{font-size:10px;color:rgba(255,255,255,.85);align-self:flex-end;padding-bottom:2px}
+.letter{
+  background:#fdfbf7;border-radius:4px 16px 16px 16px;padding:0;
+  max-width:275px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.12);
+}
+.letter-top{
+  background:linear-gradient(135deg,#8b6f47,#a8834f);color:#fff;
+  padding:11px 15px;font-size:12px;font-weight:700;letter-spacing:.05em;
+}
+.letter-body{padding:15px;font-size:14px;line-height:1.85;color:#3d3428;white-space:pre-wrap}
+.letter-from{
+  border-top:1px dashed #ddd0ba;margin-top:13px;padding-top:11px;
+  font-size:12px;color:#8b6f47;text-align:right;
+}
+.pv-caption{
+  text-align:center;color:#c3ccd8;font-size:11px;margin-top:14px;line-height:1.8;
+}
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="head">
+    <div class="tie">👔</div>
+    <h1>父の日カプセルメッセージ</h1>
+    <div class="sub">来年の父の日に、お父さんへ届きます</div>
+  </div>
+
+  <div class="body">
+    <div class="note">
+      今日書いたメッセージをカプセルに保管し、来年の父の日の前日にお父さんのLINEへ自動でお届けします。内容はいつでも書き換えられます。
+    </div>
+
+    <label>あなたの名前</label>
+    <input type="text" id="name" placeholder="例：太郎">
+
+    <label>お父さんのLINE ID</label>
+    <input type="text" id="father" placeholder="お父さんのLINE IDを入力">
+
+    <label>メッセージ</label>
+    <textarea id="msg" placeholder="お父さんへ&#10;&#10;いつもありがとう。"></textarea>
+
+    <button id="save">カプセルに保存する</button>
+    <div id="status"></div>
+  </div>
+
+  <div class="foot">🍺 一年後のその日まで、大切にお預かりします</div>
+</div>
+
+<div id="preview">
+  <div class="pv-lead">
+    <strong>― 1年後 ―</strong>
+    お父さんのLINEには、こう届きます
+  </div>
+
+  <div class="phone">
+    <div class="talk-bar"><span class="back">‹</span> ○○ビール</div>
+    <div class="talk">
+      <div class="day"><span id="pvDate">2027年6月19日（土）</span></div>
+
+      <div class="row">
+        <div class="icon">○○<br>ビール</div>
+        <div class="bubble">お父さん、明日は父の日ですね。<br>1年前、お子さまからお預かりしていたメッセージが届いています。</div>
+        <div class="time">9:00</div>
+      </div>
+
+      <div class="row">
+        <div class="icon">○○<br>ビール</div>
+        <div class="letter">
+          <div class="letter-top">✉ カプセルメッセージが届きました</div>
+          <div class="letter-body"><span id="pvMsg"></span><div class="letter-from">― <span id="pvName"></span> より</div></div>
+        </div>
+        <div class="time">9:00</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pv-caption">※ 1年前に書かれたメッセージが、この日に自動配信されます</div>
+</div>
+
+<script>
+var GAS_URL = 'ここにGASのデプロイURL（/execで終わるもの）を貼る';
+
+function show(text, cls){
+  var s = document.getElementById('status');
+  s.textContent = text;
+  s.className = cls;
+}
+
+document.getElementById('save').addEventListener('click', function(){
+  var btn    = document.getElementById('save');
+  var name   = document.getElementById('name').value.trim();
+  var father = document.getElementById('father').value.trim();
+  var msg    = document.getElementById('msg').value.trim();
+
+  if (!name || !father || !msg) { show('すべての項目を入力してください', 'ng'); return; }
+
+  btn.disabled = true;
+  show('カプセルに保存しています...', 'ok');
+
+  var params = 'action=save'
+    + '&childUserId='  + encodeURIComponent('demo-' + Date.now())
+    + '&childName='    + encodeURIComponent(name)
+    + '&fatherUserId=' + encodeURIComponent(father)
+    + '&message='      + encodeURIComponent(msg);
+
+  var cb = 'cb' + Date.now();
+  window[cb] = function(res){
+    btn.disabled = false;
+    if (res.success) {
+      show('保存しました。来年の父の日にお届けします', 'ok');
+      showPreview(name, msg);
+    } else {
+      show('保存に失敗しました', 'ng');
+    }
+    delete window[cb];
+  };
+
+  var s = document.createElement('script');
+  s.src = GAS_URL + '?' + params + '&callback=' + cb;
+  s.onerror = function(){ btn.disabled = false; show('通信エラーが発生しました', 'ng'); };
+  document.body.appendChild(s);
+});
+
+function showPreview(name, msg){
+  document.getElementById('pvMsg').textContent  = msg;
+  document.getElementById('pvName').textContent = name;
+
+  var y = new Date().getFullYear() + 1;
+  var d = thirdSunday(y);
+  d.setDate(d.getDate() - 1);
+  var w = ['日','月','火','水','木','金','土'][d.getDay()];
+  document.getElementById('pvDate').textContent =
+    y + '年' + (d.getMonth()+1) + '月' + d.getDate() + '日（' + w + '）';
+
+  var pv = document.getElementById('preview');
+  pv.style.display = 'block';
+  setTimeout(function(){ pv.scrollIntoView({behavior:'smooth'}); }, 300);
+}
+
+// 6月の第3日曜（父の日）
+function thirdSunday(year){
+  var d = new Date(year, 5, 1);
+  var offset = (7 - d.getDay()) % 7;
+  return new Date(year, 5, 1 + offset + 14);
+}
+</script>
+</body>
+</html>
