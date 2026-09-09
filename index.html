@@ -66,3 +66,61 @@ button:disabled{background:#c4bcb0;box-shadow:none}
     <div class="note">
       今日書いたメッセージをカプセルに保管し、来年の父の日の前日にお父さんのLINEへ自動でお届けします。内容はいつでも書き換えられます。
     </div>
+
+    <label>あなたの名前</label>
+    <input type="text" id="name" placeholder="例：太郎">
+
+    <label>お父さんのLINE ID<span class="hint">Uから始まるID</span></label>
+    <input type="text" id="father" placeholder="U1234567890abcdef">
+
+    <label>メッセージ</label>
+    <textarea id="msg" placeholder="お父さんへ&#10;&#10;いつもありがとう。"></textarea>
+
+    <button id="save">カプセルに保存する</button>
+    <div id="status"></div>
+  </div>
+
+  <div class="foot">🍺 一年後のその日まで、大切にお預かりします</div>
+</div>
+
+<script>
+var GAS_URL = 'ここにGASのデプロイURL（/execで終わるもの）を貼る';
+
+function show(text, cls){
+  var s = document.getElementById('status');
+  s.textContent = text;
+  s.className = cls;
+}
+
+document.getElementById('save').addEventListener('click', function(){
+  var btn    = document.getElementById('save');
+  var name   = document.getElementById('name').value.trim();
+  var father = document.getElementById('father').value.trim();
+  var msg    = document.getElementById('msg').value.trim();
+
+  if (!name || !father || !msg) { show('すべての項目を入力してください', 'ng'); return; }
+
+  btn.disabled = true;
+  show('カプセルに保存しています...', 'ok');
+
+  var params = 'action=save'
+    + '&childUserId='  + encodeURIComponent('demo-' + Date.now())
+    + '&childName='    + encodeURIComponent(name)
+    + '&fatherUserId=' + encodeURIComponent(father)
+    + '&message='      + encodeURIComponent(msg);
+
+  var cb = 'cb' + Date.now();
+  window[cb] = function(res){
+    btn.disabled = false;
+    show(res.success ? '保存しました。来年の父の日にお届けします' : '保存に失敗しました', res.success ? 'ok' : 'ng');
+    delete window[cb];
+  };
+
+  var s = document.createElement('script');
+  s.src = GAS_URL + '?' + params + '&callback=' + cb;
+  s.onerror = function(){ btn.disabled = false; show('通信エラーが発生しました', 'ng'); };
+  document.body.appendChild(s);
+});
+</script>
+</body>
+</html>
