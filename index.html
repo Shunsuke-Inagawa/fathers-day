@@ -6,81 +6,63 @@
 <title>父の日カプセルメッセージ</title>
 <style>
 *{box-sizing:border-box}
-body{font-family:-apple-system,'Hiragino Sans',sans-serif;background:#eef0f5;margin:0;padding:16px;color:#333}
-.card{background:#fff;border-radius:14px;padding:24px;max-width:420px;margin:0 auto;box-shadow:0 4px 20px rgba(0,0,0,.08)}
-h1{font-size:21px;margin:0 0 4px}
-.sub{color:#8a8a8a;font-size:13px;margin-bottom:18px}
-.note{background:#f3f0fb;border-left:3px solid #6b4fbb;padding:11px 13px;border-radius:6px;font-size:13px;line-height:1.6;margin-bottom:18px}
-label{display:block;font-size:13px;font-weight:600;margin:16px 0 5px}
-input,textarea{width:100%;padding:11px;border:1px solid #ddd;border-radius:8px;font-size:15px;font-family:inherit}
-textarea{min-height:120px;resize:vertical}
-button{width:100%;margin-top:20px;padding:14px;background:#6b4fbb;color:#fff;border:0;border-radius:8px;font-size:16px;font-weight:600}
-button:disabled{background:#bbb}
-#status{margin-top:14px;padding:11px;border-radius:8px;font-size:14px;text-align:center;display:none}
-.ok{display:block!important;background:#e8f5e9;color:#2e7d32}
-.ng{display:block!important;background:#ffebee;color:#c62828}
+body{
+  font-family:-apple-system,'Hiragino Sans','Noto Sans JP',sans-serif;
+  background:linear-gradient(170deg,#2c3e50 0%,#3d5166 45%,#4a5f75 100%);
+  margin:0;padding:24px 16px 40px;color:#2d2d2d;min-height:100vh;
+}
+.card{
+  background:#fdfbf7;border-radius:16px;max-width:430px;margin:0 auto;
+  box-shadow:0 12px 40px rgba(0,0,0,.25);overflow:hidden;
+}
+.head{
+  background:linear-gradient(135deg,#8b6f47 0%,#a8834f 100%);
+  padding:30px 24px 26px;text-align:center;color:#fff;position:relative;
+}
+.head::after{
+  content:'';position:absolute;left:0;right:0;bottom:0;height:5px;
+  background:repeating-linear-gradient(90deg,#c9a227 0 14px,#8b6f47 14px 28px);
+}
+.tie{font-size:38px;line-height:1;margin-bottom:8px}
+h1{font-size:22px;margin:0 0 6px;letter-spacing:.04em;font-weight:700}
+.sub{font-size:13px;opacity:.9;letter-spacing:.03em}
+.body{padding:24px}
+.note{
+  background:#f5efe3;border-left:4px solid #c9a227;
+  padding:14px 16px;border-radius:8px;font-size:13px;line-height:1.75;
+  margin-bottom:22px;color:#5a4a35;
+}
+label{display:block;font-size:13px;font-weight:700;margin:18px 0 6px;color:#5a4a35;letter-spacing:.03em}
+.hint{font-size:11px;color:#a09383;font-weight:400;margin-left:6px}
+input,textarea{
+  width:100%;padding:12px 13px;border:1.5px solid #e0d5c3;border-radius:9px;
+  font-size:15px;font-family:inherit;background:#fff;transition:border-color .2s;
+}
+input:focus,textarea:focus{outline:none;border-color:#c9a227}
+textarea{min-height:130px;resize:vertical;line-height:1.7}
+button{
+  width:100%;margin-top:24px;padding:15px;
+  background:linear-gradient(135deg,#8b6f47 0%,#a8834f 100%);
+  color:#fff;border:0;border-radius:9px;font-size:16px;font-weight:700;
+  letter-spacing:.06em;box-shadow:0 4px 14px rgba(139,111,71,.35);
+}
+button:active{transform:translateY(1px)}
+button:disabled{background:#c4bcb0;box-shadow:none}
+#status{margin-top:16px;padding:13px;border-radius:9px;font-size:14px;text-align:center;display:none;line-height:1.6}
+.ok{display:block!important;background:#eef4ea;color:#3d6b2e;border:1px solid #cfe0c4}
+.ng{display:block!important;background:#fbeceb;color:#a33a32;border:1px solid #f0cfcc}
+.foot{text-align:center;font-size:11px;color:#a09383;padding:0 24px 22px;letter-spacing:.03em}
 </style>
 </head>
 <body>
 <div class="card">
-  <h1>父の日カプセルメッセージ</h1>
-  <div class="sub">来年の父の日に、お父さんへ届きます</div>
-
-  <div class="note">
-    今日書いたメッセージを保管し、来年の父の日前日にお父さんのLINEへ自動でお届けします。내용はいつでも書き換えられます。
+  <div class="head">
+    <div class="tie">👔</div>
+    <h1>父の日カプセルメッセージ</h1>
+    <div class="sub">来年の父の日に、お父さんへ届きます</div>
   </div>
 
-  <label>あなたの名前</label>
-  <input type="text" id="name" placeholder="例：太郎">
-
-  <label>お父さんのLINE ID</label>
-  <input type="text" id="father" placeholder="Uから始まるID">
-
-  <label>メッセージ</label>
-  <textarea id="msg" placeholder="お父さんへ..."></textarea>
-
-  <button id="save">カプセルに保存する</button>
-  <div id="status"></div>
-</div>
-
-<script>
-var GAS_URL = 'ここにGASのデプロイURL（/execで終わるもの）を貼る';
-
-function show(text, cls){
-  var s = document.getElementById('status');
-  s.textContent = text;
-  s.className = cls;
-}
-
-document.getElementById('save').addEventListener('click', function(){
-  var btn    = document.getElementById('save');
-  var name   = document.getElementById('name').value.trim();
-  var father = document.getElementById('father').value.trim();
-  var msg    = document.getElementById('msg').value.trim();
-
-  if (!name || !father || !msg) { show('すべての項目を入力してください', 'ng'); return; }
-
-  btn.disabled = true;
-  show('保存中...', 'ok');
-
-  var params = 'action=save'
-    + '&childUserId='  + encodeURIComponent('demo-' + Date.now())
-    + '&childName='    + encodeURIComponent(name)
-    + '&fatherUserId=' + encodeURIComponent(father)
-    + '&message='      + encodeURIComponent(msg);
-
-  var cb = 'cb' + Date.now();
-  window[cb] = function(res){
-    btn.disabled = false;
-    show(res.success ? '保存しました。来年の父の日にお届けします' : '保存に失敗しました', res.success ? 'ok' : 'ng');
-    delete window[cb];
-  };
-
-  var s = document.createElement('script');
-  s.src = GAS_URL + '?' + params + '&callback=' + cb;
-  s.onerror = function(){ btn.disabled = false; show('通信エラーが発生しました', 'ng'); };
-  document.body.appendChild(s);
-});
-</script>
-</body>
-</html>
+  <div class="body">
+    <div class="note">
+      今日書いたメッセージをカプセルに保管し、来年の父の日の前日にお父さんのLINEへ自動でお届けします。内容はいつでも書き換えられます。
+    </div>
