@@ -149,4 +149,155 @@ var questions = [
   {
     q: '新しいものへの反応は？',
     opts: [
-      { emo:'✨', t:'珍しいものは、まず試してみたい', s:{ rich:0, light:0,
+      { emo:'✨', t:'珍しいものは、まず試してみたい', s:{ rich:0, light:0, craft:3, classic:0 } },
+      { emo:'🤔', t:'興味はあるが、結局いつものに戻る', s:{ rich:1, light:1, craft:1, classic:2 } },
+      { emo:'🎯', t:'決めた銘柄をずっと飲み続ける', s:{ rich:1, light:0, craft:0, classic:3 } },
+      { emo:'🔄', t:'その日の気分で選ぶタイプ', s:{ rich:1, light:2, craft:1, classic:0 } }
+    ]
+  },
+  {
+    q: 'お父さんの休日の過ごし方は？',
+    opts: [
+      { emo:'⛳', t:'ゴルフや釣りなど、外で体を動かす', s:{ rich:1, light:2, craft:0, classic:1 } },
+      { emo:'📺', t:'家でスポーツ観戦や映画をゆっくり', s:{ rich:2, light:0, craft:0, classic:2 } },
+      { emo:'🍳', t:'料理やDIYなど、こだわって作る', s:{ rich:0, light:0, craft:3, classic:0 } },
+      { emo:'🚶', t:'散歩や買い物でのんびり', s:{ rich:0, light:2, craft:1, classic:1 } }
+    ]
+  },
+  {
+    q: '贈るとき、どんな気持ちを伝えたい？',
+    opts: [
+      { emo:'🙏', t:'いつもありがとう、という感謝', s:{ rich:2, light:0, craft:0, classic:2 } },
+      { emo:'🎁', t:'たまには贅沢してほしい', s:{ rich:2, light:0, craft:2, classic:0 } },
+      { emo:'😌', t:'ゆっくり休んでほしい', s:{ rich:0, light:2, craft:1, classic:1 } },
+      { emo:'🥂', t:'今度一緒に飲もう、という誘い', s:{ rich:1, light:1, craft:1, classic:1 } }
+    ]
+  }
+];
+
+var results = {
+  rich: {
+    emoji:'🏅', type:'どっしり重厚タイプ',
+    catch:'一日の終わりを、深い余韻で締めくくる。<br>飲みごたえを何より大切にするお父さんです。',
+    beer:'プレミアムラガー 深煎り', sub:'PREMIUM LAGER / Alc. 6.0%',
+    desc:'長期熟成による厚みのある麦の旨みと、ロースト香のほろ苦さが特長です。一口目からしっかりとした満足感があり、肉料理や煮込みとよく合います。「今日はよく働いた」という日に、静かに開けたい一本です。',
+    tags:['コク重視','食事と一緒に','ギフト定番'],
+    spec:{ コク:92, 苦み:78, 香り:60, キレ:38 }
+  },
+  light: {
+    emoji:'🌊', type:'爽快キレ味タイプ',
+    catch:'一杯目の「うまい」を、何度でも。<br>後に残らない軽やかさを好むお父さんです。',
+    beer:'クリアドラフト 生', sub:'CLEAR DRAFT / Alc. 5.0%',
+    desc:'雑味を抑えたクリアな仕上がりで、喉ごしのよさが際立ちます。よく冷やして飲むと、キレのある後味が心地よく続きます。揚げ物やさっぱりした和食との相性がよく、暑い季節に特におすすめです。',
+    tags:['すっきり','よく冷やして','日常使い'],
+    spec:{ コク:42, 苦み:48, 香り:45, キレ:95 }
+  },
+  craft: {
+    emoji:'🌾', type:'こだわり探求タイプ',
+    catch:'味わうことそのものを、楽しむ。<br>新しい発見を歓迎するお父さんです。',
+    beer:'クラフトIPA 香り仕立て', sub:'CRAFT IPA / Alc. 5.5%',
+    desc:'複数のホップを重ね、柑橘とハーブを思わせる華やかな香りに仕上げました。飲むほどに表情が変わり、グラスを傾けるたびに新しい発見があります。チーズやスパイス料理と合わせると、香りの重なりが一層引き立ちます。',
+    tags:['香り豊か','個性派','飲み比べに'],
+    spec:{ コク:68, 苦み:85, 香り:96, キレ:52 }
+  },
+  classic: {
+    emoji:'🕰', type:'王道クラシックタイプ',
+    catch:'変わらない味が、いちばん落ち着く。<br>長年の相棒を大切にするお父さんです。',
+    beer:'クラシックラガー 定番', sub:'CLASSIC LAGER / Alc. 5.0%',
+    desc:'создан創業以来の製法を守り続けた、飽きのこない味わいです。突出した個性はありませんが、どんな食事にも寄り添い、毎日飲んでも疲れません。「やっぱりこれだな」と言われる、そんな一本です。',
+    tags:['安定の味','毎日飲める','間違いなし'],
+    spec:{ コク:66, 苦み:62, 香り:55, キレ:70 }
+  }
+};
+
+var current = 0;
+var scores = { rich:0, light:0, craft:0, classic:0 };
+
+function showIntro(){
+  document.getElementById('progress').style.display = 'none';
+  document.getElementById('screen').className = 'fade';
+  document.getElementById('screen').innerHTML =
+    '<div class="intro-lead">お父さんのことを思い浮かべながら、<br>5つの質問に答えてください。</div>'
+  + '<div class="intro-note">診断結果をもとに、<b>お父さんの好みに合った一本</b>をご提案します。'
+  + 'そのままギフトとしてご購入いただけます。</div>'
+  + '<button class="btn btn-main" onclick="startQuiz()">診断をはじめる</button>';
+}
+
+function startQuiz(){
+  current = 0;
+  scores = { rich:0, light:0, craft:0, classic:0 };
+  document.getElementById('progress').style.display = 'block';
+  showQuestion();
+}
+
+function showQuestion(){
+  var q = questions[current];
+  var pct = ((current) / questions.length) * 100;
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressTxt').textContent = '質問 ' + (current + 1) + ' / ' + questions.length;
+
+  var html = '<div class="q-num">Q' + (current + 1) + '</div>'
+           + '<div class="q-text">' + q.q + '</div>';
+  q.opts.forEach(function(o, i){
+    html += '<button class="opt" onclick="answer(' + i + ')">'
+          + '<span class="emo">' + o.emo + '</span>' + o.t + '</button>';
+  });
+
+  var el = document.getElementById('screen');
+  el.className = '';
+  el.innerHTML = html;
+  void el.offsetWidth;
+  el.className = 'fade';
+}
+
+function answer(i){
+  var s = questions[current].opts[i].s;
+  for (var k in s) scores[k] += s[k];
+  current++;
+  if (current < questions.length) showQuestion();
+  else showResult();
+}
+
+function showResult(){
+  document.getElementById('progressFill').style.width = '100%';
+  document.getElementById('progressTxt').textContent = '診断完了';
+
+  var top = 'rich', max = -1;
+  for (var k in scores) if (scores[k] > max) { max = scores[k]; top = k; }
+  var r = results[top];
+
+  var specHtml = '';
+  for (var name in r.spec) {
+    specHtml += '<div class="spec-row"><div class="spec-name">' + name + '</div>'
+              + '<div class="spec-bar"><div class="spec-fill" style="width:' + r.spec[name] + '%"></div></div></div>';
+  }
+
+  var tagHtml = r.tags.map(function(t){ return '<span class="tag">' + t + '</span>'; }).join('');
+
+  var el = document.getElementById('screen');
+  el.className = '';
+  el.innerHTML =
+    '<div class="result-head">'
+  + '<div class="result-label">診 断 結 果</div>'
+  + '<div class="result-emoji">' + r.emoji + '</div>'
+  + '<div class="result-type">' + r.type + '</div>'
+  + '<div class="result-catch">' + r.catch + '</div>'
+  + '</div>'
+  + '<div class="beer-box">'
+  + '<div class="beer-label">お す す め の 一 本</div>'
+  + '<div class="beer-name">' + r.beer + '</div>'
+  + '<div class="beer-sub">' + r.sub + '</div>'
+  + '<div class="beer-desc">' + r.desc + '</div>'
+  + '<div class="tags">' + tagHtml + '</div>'
+  + '<div class="spec">' + specHtml + '</div>'
+  + '</div>'
+  + '<button class="btn btn-main">この商品を見る</button>'
+  + '<button class="btn btn-sub" onclick="showIntro()">もう一度診断する</button>';
+  void el.offsetWidth;
+  el.className = 'fade';
+}
+
+showIntro();
+</script>
+</body>
+</html>
