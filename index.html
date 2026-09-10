@@ -8,98 +8,109 @@
 *{box-sizing:border-box}
 body{
   font-family:-apple-system,'Hiragino Sans','Noto Sans JP',sans-serif;
-  background:linear-gradient(170deg,#2c3e50 0%,#3d5166 45%,#4a5f75 100%);
+  background:linear-gradient(170deg,#f5f3f0 0%,#ede8e3 100%);
   margin:0;padding:24px 16px 40px;color:#2d2d2d;min-height:100vh;
 }
 .card{
-  background:#fdfbf7;border-radius:16px;max-width:430px;margin:0 auto;
-  box-shadow:0 12px 40px rgba(0,0,0,.25);overflow:hidden;
+  background:#fff;border-radius:16px;max-width:430px;margin:0 auto;
+  box-shadow:0 8px 28px rgba(0,0,0,.12);overflow:hidden;
 }
 .head{
-  background:linear-gradient(135deg,#8b6f47 0%,#a8834f 100%);
-  padding:30px 24px 26px;text-align:center;color:#fff;position:relative;
+  background:linear-gradient(135deg,#9b8b7e 0%,#b0a091 100%);
+  padding:32px 24px 28px;text-align:center;color:#fff;position:relative;
+  transition:background .3s ease;
 }
+.head.event-fathers-day{background:linear-gradient(135deg,#8b7b6e 0%,#a9998a 100%)}
+.head.event-mothers-day{background:linear-gradient(135deg,#b38fa8 0%,#c9a8bb 100%)}
+.head.event-children-day{background:linear-gradient(135deg,#7ca583 0%,#96b99a 100%)}
+.head.event-birthday{background:linear-gradient(135deg,#c4a472 0%,#d4b687 100%)}
+
 .head::after{
-  content:'';position:absolute;left:0;right:0;bottom:0;height:5px;
-  background:repeating-linear-gradient(90deg,#c9a227 0 14px,#8b6f47 14px 28px);
+  content:'';position:absolute;left:0;right:0;bottom:0;height:4px;
+  background:repeating-linear-gradient(90deg,rgba(255,255,255,.4) 0 12px,transparent 12px 24px);
 }
-.icon{font-size:42px;line-height:1;margin-bottom:10px}
-h1{font-size:22px;margin:0 0 6px;letter-spacing:.04em;font-weight:700}
-.sub{font-size:13px;opacity:.9;letter-spacing:.03em}
-.body{padding:24px}
+.icon{font-size:42px;line-height:1;margin-bottom:10px;transition:transform .2s}
+h1{font-size:22px;margin:0 0 6px;letter-spacing:.04em;font-weight:600;color:#fff}
+.sub{font-size:13px;opacity:.92;letter-spacing:.03em;color:#fff}
+.body{padding:26px}
 .note{
-  background:#f5efe3;border-left:4px solid #c9a227;
-  padding:14px 16px;border-radius:8px;font-size:13px;line-height:1.75;
-  margin-bottom:22px;color:#5a4a35;
+  background:#f9f7f4;border-left:3px solid #b0a091;
+  padding:14px 16px;border-radius:9px;font-size:13px;line-height:1.8;
+  margin-bottom:22px;color:#5a5a5a;
 }
-label{display:block;font-size:13px;font-weight:700;margin:18px 0 6px;color:#5a4a35;letter-spacing:.03em}
+label{display:block;font-size:13px;font-weight:600;margin:18px 0 7px;color:#3d3d3d;letter-spacing:.02em}
 select,input,textarea{
-  width:100%;padding:12px 13px;border:1.5px solid #e0d5c3;border-radius:9px;
-  font-size:15px;font-family:inherit;background:#fff;transition:border-color .2s;
+  width:100%;padding:12px 13px;border:1.5px solid #e0d8d0;border-radius:9px;
+  font-size:15px;font-family:inherit;background:#fefcfa;transition:border-color .2s;
+  color:#2d2d2d;
 }
-select:focus,input:focus,textarea:focus{outline:none;border-color:#c9a227}
+select:focus,input:focus,textarea:focus{outline:none;border-color:#9b8b7e}
 textarea{min-height:130px;resize:vertical;line-height:1.7}
 
-.photo-upload{margin:18px 0;padding:14px;background:#f5efe3;border-radius:9px;border:1.5px dashed #e0d5c3;text-align:center}
+.photo-upload{margin:18px 0;padding:14px;background:#f9f7f4;border-radius:9px;border:1.5px dashed #e0d8d0;text-align:center}
 .photo-upload input[type="file"]{display:none}
-.photo-upload label{margin:0;font-size:13px;color:#8b6f47;cursor:pointer;font-weight:600}
+.photo-upload label{margin:0;font-size:13px;color:#7a6a5a;cursor:pointer;font-weight:600}
 .photo-upload label:hover{text-decoration:underline}
 #photoPreview{
   width:100%;max-height:200px;border-radius:8px;object-fit:cover;
   margin-top:12px;display:none;
 }
-.photo-info{font-size:11px;color:#9b8b72;margin-top:8px}
+.photo-info{font-size:11px;color:#9b8b7a;margin-top:8px}
 
 button{
   width:100%;margin-top:24px;padding:15px;
-  background:linear-gradient(135deg,#8b6f47 0%,#a8834f 100%);
-  color:#fff;border:0;border-radius:9px;font-size:16px;font-weight:700;
-  letter-spacing:.06em;box-shadow:0 4px 14px rgba(139,111,71,.35);
+  background:linear-gradient(135deg,#9b8b7e 0%,#b0a091 100%);
+  color:#fff;border:0;border-radius:9px;font-size:16px;font-weight:600;
+  letter-spacing:.05em;box-shadow:0 4px 14px rgba(155,139,126,.3);
+  transition:all .2s;
 }
-button:active{transform:translateY(1px)}
-button:disabled{background:#c4bcb0;box-shadow:none}
+button:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 6px 18px rgba(155,139,126,.4)}
+button:active{transform:translateY(0)}
+button:disabled{background:#d4ccc4;box-shadow:none;opacity:.6}
+
 #status{margin-top:16px;padding:13px;border-radius:9px;font-size:14px;text-align:center;display:none;line-height:1.6}
-.ok{display:block!important;background:#eef4ea;color:#3d6b2e;border:1px solid #cfe0c4}
-.ng{display:block!important;background:#fbeceb;color:#a33a32;border:1px solid #f0cfcc}
-.foot{text-align:center;font-size:11px;color:#a09383;padding:0 24px 22px;letter-spacing:.03em}
+.ok{display:block!important;background:#f0f8f4;color:#2d7a5a;border:1px solid #d4e8dc}
+.ng{display:block!important;background:#fef4f4;color:#a33a32;border:1px solid #f0cfcc}
+
+.foot{text-align:center;font-size:11px;color:#9b8b7a;padding:0 26px 24px;letter-spacing:.03em}
 
 /* プレビュー */
 #preview{display:none;max-width:430px;margin:26px auto 0}
-.pv-lead{text-align:center;color:#e8e0d0;font-size:13px;letter-spacing:.06em;margin-bottom:12px;line-height:1.8}
-.pv-lead strong{display:block;font-size:15px;color:#f0d98a;font-weight:700;margin-bottom:3px}
-.phone{background:#8fa8c8;border-radius:16px;overflow:hidden;box-shadow:0 12px 40px rgba(0,0,0,.3)}
-.talk-bar{background:#5b7ba3;color:#fff;padding:12px 16px;font-size:14px;font-weight:600;display:flex;align-items:center;gap:8px}
+.pv-lead{text-align:center;color:#7a7a7a;font-size:13px;letter-spacing:.06em;margin-bottom:12px;line-height:1.8}
+.pv-lead strong{display:block;font-size:15px;color:#9b8b7e;font-weight:600;margin-bottom:3px}
+.phone{background:#b0a89a;border-radius:16px;overflow:hidden;box-shadow:0 12px 40px rgba(0,0,0,.25)}
+.talk-bar{background:#8a7f77;color:#fff;padding:12px 16px;font-size:14px;font-weight:600;display:flex;align-items:center;gap:8px}
 .talk-bar .back{opacity:.85;font-size:16px}
-.talk{padding:16px 14px 22px;min-height:320px}
+.talk{padding:16px 14px 22px;min-height:320px;background:#fff}
 .day{text-align:center;margin-bottom:16px}
-.day span{background:rgba(0,0,0,.18);color:#fff;font-size:11px;padding:4px 12px;border-radius:11px;letter-spacing:.04em}
+.day span{background:rgba(0,0,0,.12);color:#5a5a5a;font-size:11px;padding:4px 12px;border-radius:11px;letter-spacing:.04em}
 .row{display:flex;gap:8px;margin-bottom:14px;align-items:flex-end}
 .icon2{
   width:38px;height:38px;border-radius:50%;flex-shrink:0;
-  background:#3d5f3d;color:#fff;font-size:14px;
+  background:#e0d8d0;color:#7a6a5a;font-size:20px;
   display:flex;align-items:center;justify-content:center;
 }
-.bubble{background:#fff;border-radius:4px 16px 16px 16px;padding:13px 15px;font-size:14px;line-height:1.75;max-width:270px;box-shadow:0 1px 3px rgba(0,0,0,.08)}
-.time{font-size:10px;color:rgba(255,255,255,.85);align-self:flex-end;padding-bottom:2px}
-.letter{background:#fdfbf7;border-radius:4px 16px 16px 16px;max-width:275px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.12)}
-.letter-top{background:linear-gradient(135deg,#8b6f47,#a8834f);color:#fff;padding:11px 15px;font-size:12px;font-weight:700;letter-spacing:.05em}
-.letter-body{padding:15px;font-size:14px;line-height:1.85;color:#3d3428;white-space:pre-wrap}
+.bubble{background:#f5f5f5;border-radius:4px 16px 16px 16px;padding:13px 15px;font-size:14px;line-height:1.75;max-width:270px;box-shadow:0 1px 3px rgba(0,0,0,.08);color:#3d3d3d}
+.time{font-size:10px;color:rgba(0,0,0,.5);align-self:flex-end;padding-bottom:2px}
+.letter{background:#fefcfa;border-radius:4px 16px 16px 16px;max-width:275px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.12)}
+.letter-top{background:linear-gradient(135deg,#9b8b7e,#b0a091);color:#fff;padding:11px 15px;font-size:12px;font-weight:600;letter-spacing:.05em}
+.letter-body{padding:15px;font-size:14px;line-height:1.85;color:#3d3d3d;white-space:pre-wrap}
 .letter-photo{width:100%;height:140px;object-fit:cover;margin:10px 0}
-.letter-from{border-top:1px dashed #ddd0ba;margin-top:13px;padding-top:11px;font-size:12px;color:#8b6f47;text-align:right}
-.pv-caption{text-align:center;color:#c3ccd8;font-size:11px;margin-top:14px;line-height:1.8}
+.letter-from{border-top:1px dashed #d4ccc4;margin-top:13px;padding-top:11px;font-size:12px;color:#8a7a6a;text-align:right}
+.pv-caption{text-align:center;color:#8a7a7a;font-size:11px;margin-top:14px;line-height:1.8}
 </style>
 </head>
 <body>
 <div class="card">
-  <div class="head">
-    <div class="icon" id="headIcon">👔</div>
-    <h1 id="headTitle">父の日カプセルメッセージ</h1>
+  <div class="head" id="headClass">
+    <div class="icon" id="headIcon">💌</div>
+    <h1 id="headTitle">カプセルメッセージ</h1>
     <div class="sub">大切な日に、メッセージが届きます</div>
   </div>
 
   <div class="body">
     <div class="note">
-      大切な日のために、今からメッセージと写真を保管しておきましょう。その日が来たら、お相手のLINEへ自動で届きます。内容はいつでも書き換えられます。
+      大切な日のために、今からメッセージと写真を保管しておきましょう。その日が来たら、相手のLINEへ自動で届きます。内容はいつでも書き換えられます。
     </div>
 
     <label>どの日のメッセージ？</label>
@@ -117,11 +128,11 @@ button:disabled{background:#c4bcb0;box-shadow:none}
     <label>あなたの名前</label>
     <input type="text" id="name" placeholder="例：太郎">
 
-    <label id="recipientLabel">お父さんのLINE ID</label>
-    <input type="text" id="recipient" placeholder="お父さんのLINE IDを入力">
+    <label>相手のLINE ID</label>
+    <input type="text" id="recipient" placeholder="相手のLINE IDを入力">
 
     <label>メッセージ</label>
-    <textarea id="msg" placeholder="お父さんへ&#10;&#10;いつもありがとう。"></textarea>
+    <textarea id="msg" placeholder="メッセージを書いてください&#10;&#10;例：いつもありがとう。"></textarea>
 
     <label>写真を追加</label>
     <div class="photo-upload">
@@ -135,23 +146,23 @@ button:disabled{background:#c4bcb0;box-shadow:none}
     <div id="status"></div>
   </div>
 
-  <div class="foot">💌 その日が来るまで、大切にお預かりします</div>
+  <div class="foot">💌 その日まで、大切にお預かりします</div>
 </div>
 
 <div id="preview">
   <div class="pv-lead">
-    <strong id="pvDateLabel">― 1年後 ―</strong>
-    お相手のLINEには、こう届きます
+    <strong id="pvDateLabel">― その日 ―</strong>
+    相手のLINEには、こう届きます
   </div>
 
   <div class="phone">
-    <div class="talk-bar"><span class="back">‹</span> メッセージボット</div>
+    <div class="talk-bar"><span class="back">‹</span> メッセージ</div>
     <div class="talk">
       <div class="day"><span id="pvDate">日付</span></div>
 
       <div class="row">
         <div class="icon2">💌</div>
-        <div class="bubble">お誕生日おめでとうございます。<br>大切なメッセージが届いています。</div>
+        <div class="bubble">大切なメッセージが届いています。</div>
         <div class="time">9:00</div>
       </div>
 
@@ -181,27 +192,31 @@ var selectedPhoto = null;
 var events = {
   'fathers-day': {
     icon: '👔',
-    title: '父の日カプセルメッセージ',
-    label: 'お父さんのLINE ID',
-    calc: function() { return calcNthSunday(new Date().getFullYear() + 1, 5, 3, -1); }
+    title: 'カプセルメッセージ',
+    classname: 'event-fathers-day',
+    calc: function() { return calcNthSunday(new Date().getFullYear() + 1, 5, 3, -1); },
+    label: '― 1年後 ―'
   },
   'mothers-day': {
     icon: '🌸',
-    title: '母の日カプセルメッセージ',
-    label: 'お母さんのLINE ID',
-    calc: function() { return calcNthSunday(new Date().getFullYear() + 1, 4, 2, -1); }
+    title: 'カプセルメッセージ',
+    classname: 'event-mothers-day',
+    calc: function() { return calcNthSunday(new Date().getFullYear() + 1, 4, 2, -1); },
+    label: '― 1年後 ―'
   },
   'children-day': {
     icon: '🎏',
-    title: 'こどもの日カプセルメッセージ',
-    label: 'お子さまのLINE ID',
-    calc: function() { return new Date(new Date().getFullYear() + 1, 4, 4); }
+    title: 'カプセルメッセージ',
+    classname: 'event-children-day',
+    calc: function() { return new Date(new Date().getFullYear() + 1, 4, 4); },
+    label: '― 来年 ―'
   },
   'birthday': {
     icon: '🎂',
-    title: 'お誕生日カプセルメッセージ',
-    label: '相手のLINE ID',
-    calc: function() { return null; }
+    title: 'カプセルメッセージ',
+    classname: 'event-birthday',
+    calc: function() { return null; },
+    label: '― 来年のお誕生日 ―'
   }
 };
 
@@ -213,11 +228,18 @@ function calcNthSunday(y, m, n, offset) {
 
 document.getElementById('event').addEventListener('change', function() {
   var evt = events[this.value];
-  if (!evt) return;
+  if (!evt) {
+    document.getElementById('headClass').className = 'head';
+    document.getElementById('headIcon').textContent = '💌';
+    document.getElementById('headTitle').textContent = 'カプセルメッセージ';
+    document.getElementById('birthdayLabel').style.display = 'none';
+    document.getElementById('birthdate').style.display = 'none';
+    return;
+  }
   
+  document.getElementById('headClass').className = 'head ' + evt.classname;
   document.getElementById('headIcon').textContent = evt.icon;
   document.getElementById('headTitle').textContent = evt.title;
-  document.getElementById('recipientLabel').textContent = evt.label;
   
   if (this.value === 'birthday') {
     document.getElementById('birthdayLabel').style.display = 'block';
@@ -316,13 +338,8 @@ function showPreview(name, msg, eventType, deliveryDate) {
   document.getElementById('pvDate').textContent =
     deliveryDate.getFullYear() + '年' + (deliveryDate.getMonth() + 1) + '月' + deliveryDate.getDate() + '日（' + w + '）';
 
-  var pvLabel = {
-    'fathers-day': '― 1年後 ―',
-    'mothers-day': '― 1年後 ―',
-    'children-day': '― 来年 ―',
-    'birthday': '― 来年のお誕生日 ―'
-  };
-  document.getElementById('pvDateLabel').textContent = pvLabel[eventType] || '― その日 ―';
+  var pvLabel = events[eventType].label || '― その日 ―';
+  document.getElementById('pvDateLabel').textContent = pvLabel;
 
   var pv = document.getElementById('preview');
   pv.style.display = 'block';
