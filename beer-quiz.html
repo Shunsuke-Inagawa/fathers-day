@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>父の日ビール診断</title>
+<style>
+*{box-sizing:border-box}
+body{
+  font-family:-apple-system,'Hiragino Sans','Noto Sans JP',sans-serif;
+  background:linear-gradient(170deg,#2e2419 0%,#4a3a26 55%,#5c4930 100%);
+  margin:0;padding:22px 16px 40px;min-height:100vh;color:#2d2d2d;
+}
+.card{
+  background:#fdfbf7;border-radius:18px;max-width:430px;margin:0 auto;
+  box-shadow:0 14px 44px rgba(0,0,0,.3);overflow:hidden;
+}
+
+/* ヘッダー */
+.head{
+  background:linear-gradient(135deg,#a8763a 0%,#c99a52 100%);
+  padding:30px 24px 26px;text-align:center;color:#fff;position:relative;
+}
+.head::after{
+  content:'';position:absolute;left:0;right:0;bottom:0;height:16px;
+  background:radial-gradient(circle at 10px -4px,#fdfbf7 9px,transparent 9px) repeat-x;
+  background-size:20px 16px;
+}
+.head .mug{font-size:44px;line-height:1;margin-bottom:8px}
+h1{font-size:23px;margin:0 0 6px;font-weight:700;letter-spacing:.06em}
+.head .sub{font-size:12.5px;opacity:.93;letter-spacing:.04em}
+
+.body{padding:26px 24px 30px}
+
+/* 進捗バー */
+.progress{display:none;margin-bottom:22px}
+.progress-bar{height:5px;background:#ece4d6;border-radius:3px;overflow:hidden}
+.progress-fill{height:100%;background:linear-gradient(90deg,#c99a52,#e0b76a);width:0;transition:width .35s ease;border-radius:3px}
+.progress-txt{font-size:11px;color:#a08f76;text-align:right;margin-top:7px;letter-spacing:.05em}
+
+/* イントロ */
+.intro-lead{font-size:14px;line-height:1.95;color:#5a4a35;text-align:center;margin-bottom:6px}
+.intro-note{
+  background:#f5efe3;border-radius:10px;padding:15px 17px;margin:22px 0 4px;
+  font-size:12.5px;line-height:1.85;color:#7a6a52;
+}
+.intro-note b{color:#5a4a35}
+
+/* 質問 */
+.q-num{
+  display:inline-block;background:#c99a52;color:#fff;font-size:11px;font-weight:700;
+  padding:4px 11px;border-radius:11px;letter-spacing:.09em;margin-bottom:13px;
+}
+.q-text{font-size:17.5px;font-weight:700;line-height:1.6;color:#3d3428;margin-bottom:22px}
+.opt{
+  display:block;width:100%;text-align:left;background:#fff;border:1.5px solid #e5dbc9;
+  border-radius:11px;padding:15px 17px;margin-bottom:11px;font-size:14.5px;
+  font-family:inherit;color:#3d3428;line-height:1.55;transition:all .18s;
+}
+.opt:hover{border-color:#c99a52;background:#fffdf8;transform:translateX(3px)}
+.opt:active{transform:scale(.985)}
+.opt .emo{margin-right:9px;font-size:16px}
+
+/* 結果 */
+.result-head{text-align:center;margin-bottom:22px}
+.result-label{font-size:11.5px;color:#a08f76;letter-spacing:.15em;margin-bottom:9px}
+.result-emoji{font-size:56px;line-height:1;margin-bottom:12px}
+.result-type{font-size:22px;font-weight:700;color:#8b5e2a;line-height:1.45;margin-bottom:9px}
+.result-catch{font-size:13px;color:#7a6a52;line-height:1.8}
+
+.beer-box{
+  background:linear-gradient(160deg,#fffdf8,#f7f0e2);
+  border:1.5px solid #e5dbc9;border-radius:13px;padding:20px;margin:22px 0;
+}
+.beer-label{font-size:10.5px;color:#a08f76;letter-spacing:.13em;margin-bottom:9px;text-align:center}
+.beer-name{font-size:19px;font-weight:700;color:#8b5e2a;text-align:center;margin-bottom:5px}
+.beer-sub{font-size:11.5px;color:#a08f76;text-align:center;margin-bottom:16px;letter-spacing:.04em}
+.beer-desc{font-size:13.5px;line-height:1.95;color:#5a4a35}
+
+.tags{display:flex;gap:7px;flex-wrap:wrap;justify-content:center;margin-top:16px}
+.tag{background:#ece0cb;color:#8b6f47;font-size:11px;padding:5px 11px;border-radius:12px;letter-spacing:.03em}
+
+.spec{margin-top:18px;padding-top:16px;border-top:1px dashed #ddd0ba}
+.spec-row{display:flex;align-items:center;gap:11px;margin-bottom:11px;font-size:12px}
+.spec-row:last-child{margin-bottom:0}
+.spec-name{width:44px;color:#a08f76;flex-shrink:0;letter-spacing:.04em}
+.spec-bar{flex:1;height:6px;background:#ece4d6;border-radius:3px;overflow:hidden}
+.spec-fill{height:100%;background:linear-gradient(90deg,#c99a52,#e0b76a);border-radius:3px}
+
+.btn{
+  width:100%;padding:15px;border:0;border-radius:11px;font-size:15.5px;font-weight:700;
+  font-family:inherit;letter-spacing:.06em;transition:all .2s;
+}
+.btn-main{
+  background:linear-gradient(135deg,#a8763a,#c99a52);color:#fff;
+  box-shadow:0 5px 16px rgba(168,118,58,.35);margin-top:8px;
+}
+.btn-main:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(168,118,58,.45)}
+.btn-main:active{transform:translateY(0)}
+.btn-sub{background:none;border:1.5px solid #ddd0ba;color:#8b6f47;margin-top:11px}
+.btn-sub:hover{background:#f7f0e2}
+
+.foot{text-align:center;font-size:10.5px;color:#a08f76;padding:0 24px 22px;letter-spacing:.04em;line-height:1.8}
+.fade{animation:fade .35s ease}
+@keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="head">
+    <div class="mug">🍺</div>
+    <h1>父の日ビール診断</h1>
+    <div class="sub">5つの質問で、お父さんにぴったりの一本が見つかります</div>
+  </div>
+
+  <div class="body">
+    <div class="progress" id="progress">
+      <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+      <div class="progress-txt" id="progressTxt">質問 1 / 5</div>
+    </div>
+    <div id="screen"></div>
+  </div>
+
+  <div class="foot" id="foot">
+    ※ 診断結果は目安です。お父さまのお好みに合わせてお選びください
+  </div>
+</div>
+
+<script>
+var questions = [
+  {
+    q: 'お父さんがビールを飲むのは、どんなとき？',
+    opts: [
+      { emo:'🌇', t:'仕事終わりの一杯が何よりの楽しみ', s:{ rich:2, light:0, craft:0, classic:1 } },
+      { emo:'🍖', t:'食事と一緒にゆっくり味わう', s:{ rich:1, light:0, craft:2, classic:0 } },
+      { emo:'☀️', t:'休日の昼間から気持ちよく', s:{ rich:0, light:2, craft:1, classic:0 } },
+      { emo:'👥', t:'人が集まる場でにぎやかに', s:{ rich:0, light:1, craft:0, classic:2 } }
+    ]
+  },
+  {
+    q: '味の好みは、どちらに近い？',
+    opts: [
+      { emo:'💪', t:'しっかりコクがあって飲みごたえがある', s:{ rich:3, light:0, craft:1, classic:0 } },
+      { emo:'💧', t:'すっきりキレがよく後を引かない', s:{ rich:0, light:3, craft:0, classic:1 } },
+      { emo:'🌿', t:'香りが華やかで個性がある', s:{ rich:0, light:0, craft:3, classic:0 } },
+      { emo:'🍺', t:'昔から飲み慣れた安心の味', s:{ rich:1, light:1, craft:0, classic:3 } }
+    ]
+  },
+  {
+    q: '新しいものへの反応は？',
+    opts: [
+      { emo:'✨', t:'珍しいものは、まず試してみたい', s:{ rich:0, light:0,
