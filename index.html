@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>父の日カプセルメッセージ</title>
+<title>カプセルメッセージ</title>
 <style>
 *{box-sizing:border-box}
 body{
@@ -23,7 +23,7 @@ body{
   content:'';position:absolute;left:0;right:0;bottom:0;height:5px;
   background:repeating-linear-gradient(90deg,#c9a227 0 14px,#8b6f47 14px 28px);
 }
-.tie{font-size:38px;line-height:1;margin-bottom:8px}
+.icon{font-size:42px;line-height:1;margin-bottom:10px}
 h1{font-size:22px;margin:0 0 6px;letter-spacing:.04em;font-weight:700}
 .sub{font-size:13px;opacity:.9;letter-spacing:.03em}
 .body{padding:24px}
@@ -33,12 +33,23 @@ h1{font-size:22px;margin:0 0 6px;letter-spacing:.04em;font-weight:700}
   margin-bottom:22px;color:#5a4a35;
 }
 label{display:block;font-size:13px;font-weight:700;margin:18px 0 6px;color:#5a4a35;letter-spacing:.03em}
-input,textarea{
+select,input,textarea{
   width:100%;padding:12px 13px;border:1.5px solid #e0d5c3;border-radius:9px;
   font-size:15px;font-family:inherit;background:#fff;transition:border-color .2s;
 }
-input:focus,textarea:focus{outline:none;border-color:#c9a227}
+select:focus,input:focus,textarea:focus{outline:none;border-color:#c9a227}
 textarea{min-height:130px;resize:vertical;line-height:1.7}
+
+.photo-upload{margin:18px 0;padding:14px;background:#f5efe3;border-radius:9px;border:1.5px dashed #e0d5c3;text-align:center}
+.photo-upload input[type="file"]{display:none}
+.photo-upload label{margin:0;font-size:13px;color:#8b6f47;cursor:pointer;font-weight:600}
+.photo-upload label:hover{text-decoration:underline}
+#photoPreview{
+  width:100%;max-height:200px;border-radius:8px;object-fit:cover;
+  margin-top:12px;display:none;
+}
+.photo-info{font-size:11px;color:#9b8b72;margin-top:8px}
+
 button{
   width:100%;margin-top:24px;padding:15px;
   background:linear-gradient(135deg,#8b6f47 0%,#a8834f 100%);
@@ -51,75 +62,272 @@ button:disabled{background:#c4bcb0;box-shadow:none}
 .ok{display:block!important;background:#eef4ea;color:#3d6b2e;border:1px solid #cfe0c4}
 .ng{display:block!important;background:#fbeceb;color:#a33a32;border:1px solid #f0cfcc}
 .foot{text-align:center;font-size:11px;color:#a09383;padding:0 24px 22px;letter-spacing:.03em}
+
+/* プレビュー */
+#preview{display:none;max-width:430px;margin:26px auto 0}
+.pv-lead{text-align:center;color:#e8e0d0;font-size:13px;letter-spacing:.06em;margin-bottom:12px;line-height:1.8}
+.pv-lead strong{display:block;font-size:15px;color:#f0d98a;font-weight:700;margin-bottom:3px}
+.phone{background:#8fa8c8;border-radius:16px;overflow:hidden;box-shadow:0 12px 40px rgba(0,0,0,.3)}
+.talk-bar{background:#5b7ba3;color:#fff;padding:12px 16px;font-size:14px;font-weight:600;display:flex;align-items:center;gap:8px}
+.talk-bar .back{opacity:.85;font-size:16px}
+.talk{padding:16px 14px 22px;min-height:320px}
+.day{text-align:center;margin-bottom:16px}
+.day span{background:rgba(0,0,0,.18);color:#fff;font-size:11px;padding:4px 12px;border-radius:11px;letter-spacing:.04em}
+.row{display:flex;gap:8px;margin-bottom:14px;align-items:flex-end}
+.icon2{
+  width:38px;height:38px;border-radius:50%;flex-shrink:0;
+  background:#3d5f3d;color:#fff;font-size:14px;
+  display:flex;align-items:center;justify-content:center;
+}
+.bubble{background:#fff;border-radius:4px 16px 16px 16px;padding:13px 15px;font-size:14px;line-height:1.75;max-width:270px;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.time{font-size:10px;color:rgba(255,255,255,.85);align-self:flex-end;padding-bottom:2px}
+.letter{background:#fdfbf7;border-radius:4px 16px 16px 16px;max-width:275px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.12)}
+.letter-top{background:linear-gradient(135deg,#8b6f47,#a8834f);color:#fff;padding:11px 15px;font-size:12px;font-weight:700;letter-spacing:.05em}
+.letter-body{padding:15px;font-size:14px;line-height:1.85;color:#3d3428;white-space:pre-wrap}
+.letter-photo{width:100%;height:140px;object-fit:cover;margin:10px 0}
+.letter-from{border-top:1px dashed #ddd0ba;margin-top:13px;padding-top:11px;font-size:12px;color:#8b6f47;text-align:right}
+.pv-caption{text-align:center;color:#c3ccd8;font-size:11px;margin-top:14px;line-height:1.8}
 </style>
 </head>
 <body>
 <div class="card">
   <div class="head">
-    <div class="tie">👔</div>
-    <h1>父の日カプセルメッセージ</h1>
-    <div class="sub">来年の父の日に、お父さんへ届きます</div>
+    <div class="icon" id="headIcon">👔</div>
+    <h1 id="headTitle">父の日カプセルメッセージ</h1>
+    <div class="sub">大切な日に、メッセージが届きます</div>
   </div>
 
   <div class="body">
     <div class="note">
-      今日書いたメッセージをカプセルに保管し、来年の父の日の前日にお父さんのLINEへ自動でお届けします。内容はいつでも書き換えられます。
+      大切な日のために、今からメッセージと写真を保管しておきましょう。その日が来たら、お相手のLINEへ自動で届きます。内容はいつでも書き換えられます。
     </div>
+
+    <label>どの日のメッセージ？</label>
+    <select id="event">
+      <option value="">選択してください</option>
+      <option value="fathers-day">👔 父の日（6月）</option>
+      <option value="mothers-day">🌸 母の日（5月）</option>
+      <option value="children-day">🎏 こどもの日（5月5日）</option>
+      <option value="birthday">🎂 誕生日</option>
+    </select>
+
+    <label id="birthdayLabel" style="display:none">誕生日を入力</label>
+    <input type="date" id="birthdate" style="display:none">
 
     <label>あなたの名前</label>
     <input type="text" id="name" placeholder="例：太郎">
 
-    <label>お父さんのLINE ID</label>
-    <input type="text" id="father" placeholder="お父さんのLINE IDを入力">
+    <label id="recipientLabel">お父さんのLINE ID</label>
+    <input type="text" id="recipient" placeholder="お父さんのLINE IDを入力">
 
     <label>メッセージ</label>
     <textarea id="msg" placeholder="お父さんへ&#10;&#10;いつもありがとう。"></textarea>
 
-    <button id="save">カプセルに保存する</button>
+    <label>写真を追加</label>
+    <div class="photo-upload">
+      <label for="photoFile">📷 クリックして写真を選択</label>
+      <input type="file" id="photoFile" accept="image/*">
+      <img id="photoPreview" alt="プレビュー">
+      <div class="photo-info" id="photoInfo"></div>
+    </div>
+
+    <button id="save">メッセージと写真を保存する</button>
     <div id="status"></div>
   </div>
 
-  <div class="foot">🍺 一年後のその日まで、大切にお預かりします</div>
+  <div class="foot">💌 その日が来るまで、大切にお預かりします</div>
+</div>
+
+<div id="preview">
+  <div class="pv-lead">
+    <strong id="pvDateLabel">― 1年後 ―</strong>
+    お相手のLINEには、こう届きます
+  </div>
+
+  <div class="phone">
+    <div class="talk-bar"><span class="back">‹</span> メッセージボット</div>
+    <div class="talk">
+      <div class="day"><span id="pvDate">日付</span></div>
+
+      <div class="row">
+        <div class="icon2">💌</div>
+        <div class="bubble">お誕生日おめでとうございます。<br>大切なメッセージが届いています。</div>
+        <div class="time">9:00</div>
+      </div>
+
+      <div class="row">
+        <div class="icon2">💌</div>
+        <div class="letter">
+          <div class="letter-top">✉ メッセージが届きました</div>
+          <div class="letter-body">
+            <img id="pvPhoto" class="letter-photo" style="display:none">
+            <span id="pvMsg"></span>
+            <div class="letter-from">― <span id="pvName"></span> より</div>
+          </div>
+        </div>
+        <div class="time">9:00</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pv-caption">※ 指定された日に、この内容が自動配信されます</div>
 </div>
 
 <script>
 var GAS_URL = 'ここにGASのデプロイURL（/execで終わるもの）を貼る';
+var selectedPhoto = null;
 
-function show(text, cls){
+// イベント設定
+var events = {
+  'fathers-day': {
+    icon: '👔',
+    title: '父の日カプセルメッセージ',
+    label: 'お父さんのLINE ID',
+    calc: function() { return calcNthSunday(new Date().getFullYear() + 1, 5, 3, -1); }
+  },
+  'mothers-day': {
+    icon: '🌸',
+    title: '母の日カプセルメッセージ',
+    label: 'お母さんのLINE ID',
+    calc: function() { return calcNthSunday(new Date().getFullYear() + 1, 4, 2, -1); }
+  },
+  'children-day': {
+    icon: '🎏',
+    title: 'こどもの日カプセルメッセージ',
+    label: 'お子さまのLINE ID',
+    calc: function() { return new Date(new Date().getFullYear() + 1, 4, 4); }
+  },
+  'birthday': {
+    icon: '🎂',
+    title: 'お誕生日カプセルメッセージ',
+    label: '相手のLINE ID',
+    calc: function() { return null; }
+  }
+};
+
+function calcNthSunday(y, m, n, offset) {
+  var d = new Date(y, m, 1);
+  var firstSunday = 1 + ((7 - d.getDay()) % 7);
+  return new Date(y, m, firstSunday + (n - 1) * 7 + offset);
+}
+
+document.getElementById('event').addEventListener('change', function() {
+  var evt = events[this.value];
+  if (!evt) return;
+  
+  document.getElementById('headIcon').textContent = evt.icon;
+  document.getElementById('headTitle').textContent = evt.title;
+  document.getElementById('recipientLabel').textContent = evt.label;
+  
+  if (this.value === 'birthday') {
+    document.getElementById('birthdayLabel').style.display = 'block';
+    document.getElementById('birthdate').style.display = 'block';
+  } else {
+    document.getElementById('birthdayLabel').style.display = 'none';
+    document.getElementById('birthdate').style.display = 'none';
+  }
+});
+
+document.getElementById('photoFile').addEventListener('change', function(e) {
+  var file = e.target.files[0];
+  if (!file) return;
+
+  var reader = new FileReader();
+  reader.onload = function(event) {
+    selectedPhoto = event.target.result;
+    document.getElementById('photoPreview').src = selectedPhoto;
+    document.getElementById('photoPreview').style.display = 'block';
+    document.getElementById('photoInfo').textContent = '✓ ' + file.name + ' (' + (file.size / 1024).toFixed(0) + ' KB)';
+  };
+  reader.readAsDataURL(file);
+});
+
+function show(text, cls) {
   var s = document.getElementById('status');
   s.textContent = text;
   s.className = cls;
 }
 
-document.getElementById('save').addEventListener('click', function(){
-  var btn    = document.getElementById('save');
-  var name   = document.getElementById('name').value.trim();
-  var father = document.getElementById('father').value.trim();
-  var msg    = document.getElementById('msg').value.trim();
+document.getElementById('save').addEventListener('click', function() {
+  var btn = document.getElementById('save');
+  var eventType = document.getElementById('event').value;
+  var name = document.getElementById('name').value.trim();
+  var recipient = document.getElementById('recipient').value.trim();
+  var msg = document.getElementById('msg').value.trim();
 
-  if (!name || !father || !msg) { show('すべての項目を入力してください', 'ng'); return; }
+  if (!eventType || !name || !recipient || !msg) {
+    show('すべての項目を入力してください', 'ng');
+    return;
+  }
 
   btn.disabled = true;
-  show('カプセルに保存しています...', 'ok');
+  show('保存中...', 'ok');
+
+  var evt = events[eventType];
+  var deliveryDate;
+  
+  if (eventType === 'birthday') {
+    var bd = document.getElementById('birthdate').value;
+    if (!bd) { show('誕生日を選択してください', 'ng'); btn.disabled = false; return; }
+    var parts = bd.split('-');
+    deliveryDate = new Date(new Date().getFullYear() + 1, parseInt(parts[1]) - 1, parseInt(parts[2]));
+  } else {
+    deliveryDate = evt.calc();
+  }
 
   var params = 'action=save'
-    + '&childUserId='  + encodeURIComponent('demo-' + Date.now())
-    + '&childName='    + encodeURIComponent(name)
-    + '&fatherUserId=' + encodeURIComponent(father)
-    + '&message='      + encodeURIComponent(msg);
+    + '&childUserId=' + encodeURIComponent('demo-' + Date.now())
+    + '&childName=' + encodeURIComponent(name)
+    + '&fatherUserId=' + encodeURIComponent(recipient)
+    + '&message=' + encodeURIComponent(msg)
+    + '&eventType=' + encodeURIComponent(eventType)
+    + '&deliveryDate=' + encodeURIComponent(deliveryDate.toISOString().split('T')[0]);
 
   var cb = 'cb' + Date.now();
-  window[cb] = function(res){
+  window[cb] = function(res) {
     btn.disabled = false;
-    show(res.success ? '保存しました。来年の父の日にお届けします' : '保存に失敗しました', res.success ? 'ok' : 'ng');
+    if (res.success) {
+      show('保存しました。指定の日にお届けします', 'ok');
+      showPreview(name, msg, eventType, deliveryDate);
+    } else {
+      show('保存に失敗しました', 'ng');
+    }
     delete window[cb];
   };
 
   var s = document.createElement('script');
   s.src = GAS_URL + '?' + params + '&callback=' + cb;
-  s.onerror = function(){ btn.disabled = false; show('通信エラーが発生しました', 'ng'); };
+  s.onerror = function() { btn.disabled = false; show('通信エラーが発生しました', 'ng'); };
   document.body.appendChild(s);
 });
+
+function showPreview(name, msg, eventType, deliveryDate) {
+  document.getElementById('pvMsg').textContent = msg;
+  document.getElementById('pvName').textContent = name;
+
+  if (selectedPhoto) {
+    document.getElementById('pvPhoto').src = selectedPhoto;
+    document.getElementById('pvPhoto').style.display = 'block';
+  } else {
+    document.getElementById('pvPhoto').style.display = 'none';
+  }
+
+  var w = ['日','月','火','水','木','金','土'][deliveryDate.getDay()];
+  document.getElementById('pvDate').textContent =
+    deliveryDate.getFullYear() + '年' + (deliveryDate.getMonth() + 1) + '月' + deliveryDate.getDate() + '日（' + w + '）';
+
+  var pvLabel = {
+    'fathers-day': '― 1年後 ―',
+    'mothers-day': '― 1年後 ―',
+    'children-day': '― 来年 ―',
+    'birthday': '― 来年のお誕生日 ―'
+  };
+  document.getElementById('pvDateLabel').textContent = pvLabel[eventType] || '― その日 ―';
+
+  var pv = document.getElementById('preview');
+  pv.style.display = 'block';
+  setTimeout(function() { pv.scrollIntoView({behavior:'smooth'}); }, 300);
+}
 </script>
 </body>
 </html>
